@@ -94,7 +94,7 @@ class DataTable extends Component {
     this.props.dispatch(getUsersThunk());
     // TODO: Recheck below
     watchTaskRemovedEvent(this.props.dispatch);
-    watchTaskAddedEvent(this.props.dispatch);
+    // watchTaskAddedEvent(this.props.dispatch);
   }
   getInput = () => {
     if (this.props.inputType === "number") {
@@ -198,6 +198,7 @@ class DataTable extends Component {
     }
   };
   render() {
+    // debugger;
     //console.log(this.tasks);
     console.log(this.props.tasks);
     //console.log(this.state);
@@ -207,8 +208,6 @@ class DataTable extends Component {
 }
 
 const mapState = state => ({
-  // debugger
-
   Row: state,
   tasks: state.tasks,
   users: state.Users

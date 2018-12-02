@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import AddForm from "./AddForm.jsx";
 import { Button } from "antd";
 import uuid from "uuid/v4";
-
+import { addTask } from "../../store/gameboard/actions";
+import { connect } from "react-redux";
 class AddButton extends Component {
   state = {
     visible: false
   };
 
   handleCreate = () => {
+    let buff;
     const form = this.formRef.props.form;
     form.validateFields((err, values) => {
       if (err) return;
@@ -16,10 +18,17 @@ class AddButton extends Component {
       values.key = uuid();
 
       values.date = values.date.format();
-      values.sortlist = values.name + "~" + values.surName + "~" + values.email;
+      //values.sortlist = values.name + "~" + values.surName + "~" + values.email;
       this.props.onClick(values);
+      buff = {
+        id: values.key,
+        task: values
+      };
+      this.props.dispatch(addTask(buff));
       form.resetFields();
       this.setState({ visible: false });
+
+      //
     });
   };
 
@@ -50,5 +59,8 @@ class AddButton extends Component {
     );
   }
 }
+const mapState = state => ({
+  Row: state
+});
 
-export default AddButton;
+export default connect(mapState)(AddButton);

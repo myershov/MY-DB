@@ -19,6 +19,7 @@ export function watchUserAddedEvent(dispatch) {
   });
 }
 export const watchTaskAddedEvent = dispatch => {
+  //  debugger;
   database.ref(`/Tasks/`).on("child_added", snap => {
     dispatch(addTask(snap.val()));
   });
@@ -54,7 +55,7 @@ export const filterTasks = select => dispatch => {
   let buff;
   // console.log(select);
   const tasks = [];
-  debugger;
+
   database
     .ref(`/Tasks/`)
     .orderByChild("task/name")
@@ -80,29 +81,16 @@ export const filterTasks = select => dispatch => {
                 surNameSnap.val()
               );
               Object.values(buff).forEach(data => {
-                tasks.push(data.task);
+                tasks.push(data);
               });
             });
         });
     })
-
     .then(() => dispatch(getTasks(tasks)));
-  //console.log("tasks", tasks);
-  // .orderByChild("task/sortlist")
-  // .startAt(select)
-  // .endAt(select + "\uf8ff")
-  // .once("value", snap => {
-  //   snap.forEach(data => {
-  //     let task = data.val();
-  //     console.log(data.val());
-  //     tasks.push(task);
-  //   });
-  // })
-  // .then(() => dispatch(getTasks(tasks)));
 };
 
 export const getTasksThunk = (select, key, c) => dispatch => {
-  // debugger;
+  //debugger;
   if (c == undefined) {
     c = 10;
   }
