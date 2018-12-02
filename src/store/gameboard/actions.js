@@ -105,9 +105,11 @@ export const getTasksThunk = (select, key, c) => dispatch => {
     .once("value", snap => {
       snap.forEach(data => {
         let task = data.val();
-
         tasks.push(task);
       });
+      if ((key !== undefined || key !== "") && c == 11) {
+        tasks.shift();
+      }
     })
     .then(() => dispatch(getTasks(tasks)));
   console.log("tasks", tasks);

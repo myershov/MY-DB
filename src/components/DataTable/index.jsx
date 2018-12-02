@@ -15,6 +15,7 @@ import { Input, InputNumber } from "antd";
 import Auth from "../auth/auth";
 import Edit from "./EditButton.jsx";
 import Search from "./Search.jsx";
+import { forEach } from "@firebase/util";
 
 class DataTable extends Component {
   state = {
@@ -22,7 +23,7 @@ class DataTable extends Component {
     search: false
   };
   buffForKeys = new Map();
-  // buffForPages = [];
+
   updateData = t => {
     this.setState({ search: t, curent: 1 });
   };
@@ -31,56 +32,38 @@ class DataTable extends Component {
     //  debugger;
     // console.log(page);
     let key;
-    let count;
+    let count = 11;
     let dif;
 
-    if (
-      page !== 1 &&
-      page > this.state.curent &&
-      this.props.tasks[9] !== undefined
-    ) {
-      if (
-        page - this.state.curent == 1 &&
-        this.buffForPages.pop() - page == 1
-      ) {
-        // console.log("++");
-        this.buffForKeys.set(page, this.props.tasks[9].id);
+    if (page - this.state.curent == 1) {
+      key = this.props.tasks[this.props.tasks.length - 1].id;
+      this.buffForKeys.set(page, key);
+    } else if (page - this.state.curent > 1) {
+      this.buffForKeys.forEach((elem, index) => {
+        if (this.state.curent == index) {
+          key = elem;
+          return true;
+        }
+      });
+      count = (page - this.state.curent) * 2 + 11;
+    } else if (page - this.state.curent < 1) {
+      if (this.buffForKeys.has(page)) {
         key = this.buffForKeys.get(page);
-        // this.buffForPages.push(page);
-        //  this.buffForPages.sort();
       } else {
-        // console.log("+++");
-        // this.buffForKeys.forEach((element, keys) => {
-        //   dif = page - keys;
-        //   key = element;
-        //   count = keys * dif;
-        //   console.log(count);
-        //   return true;
-        // });
-      }
-    } else {
-      // console.log("--");
-      if (page == 1) {
-        key = "";
-      }
-      // } else if (this.buffForKeys.has(page)) {
-      //   key = this.buffForKeys.get(page);
-      // }
-      else {
-        this.buffForKeys.forEach((element, keys) => {
-          if (page > keys) {
-            dif = page - keys;
-            key = element;
-            count = keys * Math.pow(dif, 2);
-            console.log(count);
+        this.buffForKeys.forEach((elem, index) => {
+          if (page > index) {
+            key = elem;
+            count = (page - index) * 2 + 11;
             return true;
           }
         });
       }
+    } else {
+      key = "";
     }
     //todo:when pagination --
     console.log(this.buffForKeys);
-    if (this.state.search == false && key !== undefined) {
+    if (this.state.search == false) {
       this.setState({ curent: page }, () =>
         this.props.dispatch(getTasksThunk(page, key, count))
       );
