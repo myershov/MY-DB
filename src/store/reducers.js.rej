@@ -1,0 +1,6 @@
+diff a/app/store/reducers.js b/app/store/reducers.js	(rejected hunks)
+@@ -1,2 +1,2 @@
+-import tasks from "./gameboard/reducer.js"
+-import { combineReducers } from "redux"
++import tasks from './gameboard/reducer.js'
++import { combineReducers } from 'redux'

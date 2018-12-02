@@ -1,0 +1,18 @@
+.login-form {
+  max-width: 300px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.login-form-button {
+  width: 100%;
+}
+.login-div .ant-form-item > .ant-form-item-control-wrapper {
+  width: 100%;
+}
+.login-div .ant-form-item {
+  width: 100%;
+}

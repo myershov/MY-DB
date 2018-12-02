@@ -1,0 +1,27 @@
+diff a/app/store/gameboard/actions.js b/app/store/gameboard/actions.js	(rejected hunks)
+@@ -2,5 +2,5 @@
+-import * as types from "./actionTypes"
+-import { createStore, applyMiddleware } from "redux"
+-import database from "../../firebase"
+-import thunkMiddleware from "redux-thunk"
+-import Reducer from "../reducers"
++import * as types from './actionTypes'
++import { createStore, applyMiddleware } from 'redux'
++import database from '../../firebase'
++import thunkMiddleware from 'redux-thunk'
++import Reducer from '../reducers'
+@@ -17 +17 @@ export const watchTaskAddedEvent = dispatch => {
+-  database.ref(`/`).on("child_added", snap => {
++  database.ref(`/`).on('child_added', snap => {
+@@ -23 +23 @@ export const watchTaskRemovedEvent = dispatch => {
+-  database.ref(`/`).on("child_removed", snap => {
++  database.ref(`/`).on('child_removed', snap => {
+@@ -35 +35 @@ export const getTasksThunk = () => dispatch => {
+-    .once("value", snap => {
++    .once('value', snap => {
+@@ -39 +39 @@ export const getTasksThunk = () => dispatch => {
+-      });
++      })
+@@ -44 +44 @@ export const getTasksThunk = () => dispatch => {
+-export default createStore(Reducer, applyMiddleware(thunkMiddleware));
++export default createStore(Reducer, applyMiddleware(thunkMiddleware))

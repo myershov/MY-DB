@@ -1,0 +1,8 @@
+diff a/app/store/gameboard/reducer.js b/app/store/gameboard/reducer.js	(rejected hunks)
+@@ -5,3 +5,3 @@ const tasks = (state = initialState, action) => {
+-    "get tasks": () => action.tasks,
+-    "add task": () => [...state, action.task],
+-    "remove task": () => state.filter(task => task.id !== action.task.id),
++    'get tasks': () => action.tasks,
++    'add task': () => [...state, action.task],
++    'remove task': () => state.filter(task => task.id !== action.task.id),
