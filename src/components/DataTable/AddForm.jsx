@@ -18,15 +18,15 @@ class AddForm extends Component {
   // }
   render() {
     // console.log(this.props.selected);
-    let dailyPlan = this.props.selected && this.props.selected.plan;
-    let futurePlan = "";
-    let Notes = "";
+    // let dailyPlan = this.props.selected && this.props.selected.plan;
+    // let futurePlan = "";
+    // let Notes = "";
 
-    if (this.props.selected && this.props.selected.key) {
-      dailyPlan = this.props.selected.dailyPlan;
-      futurePlan = this.props.selected.futurePlan;
-      Notes = this.props.selected.notes;
-    }
+    // if (this.props.selected && this.props.selected.key) {
+    //   dailyPlan = this.props.selected.dailyPlan;
+    //   futurePlan = this.props.selected.futurePlan;
+    //   Notes = this.props.selected.notes;
+    // }
 
     const {
       form: { getFieldDecorator },

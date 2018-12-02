@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { addTaskToFirebase, removeTaskFromFirebase } from "../../firebase";
 import AddButton from "./AddButton.jsx";
-import { Button, Table, Divider } from "antd";
+import { Table, Divider } from "antd";
 import {
   getTasksThunk,
-  watchTaskAddedEvent,
   watchTaskRemovedEvent,
   getUsersThunk,
   selectRow,
@@ -15,7 +14,6 @@ import { Input, InputNumber } from "antd";
 import Auth from "../auth/auth";
 import Edit from "./EditButton.jsx";
 import Search from "./Search.jsx";
-import { forEach } from "@firebase/util";
 
 class DataTable extends Component {
   state = {
@@ -29,15 +27,17 @@ class DataTable extends Component {
   };
 
   onChangePagination = page => {
-    //  debugger;
-    // console.log(page);
     let key;
     let count = 11;
-    let dif;
 
     if (page - this.state.curent == 1) {
-      key = this.props.tasks[this.props.tasks.length - 1].id;
-      this.buffForKeys.set(page, key);
+      if (this.props.tasks.length > 10) {
+        key = this.props.tasks[this.props.tasks.length - 1].id;
+        this.buffForKeys.set(page, key);
+      } else {
+        console.log("this");
+        key = "no more";
+      }
     } else if (page - this.state.curent > 1) {
       this.buffForKeys.forEach((elem, index) => {
         if (this.state.curent == index) {
@@ -61,8 +61,7 @@ class DataTable extends Component {
     } else {
       key = "";
     }
-    //todo:when pagination --
-    console.log(this.buffForKeys);
+
     if (this.state.search == false) {
       this.setState({ curent: page }, () =>
         this.props.dispatch(getTasksThunk(page, key, count))
@@ -75,9 +74,8 @@ class DataTable extends Component {
   componentDidMount() {
     this.props.dispatch(getTasksThunk());
     this.props.dispatch(getUsersThunk());
-    // TODO: Recheck below
+
     watchTaskRemovedEvent(this.props.dispatch);
-    // watchTaskAddedEvent(this.props.dispatch);
   }
   getInput = () => {
     if (this.props.inputType === "number") {
@@ -181,10 +179,6 @@ class DataTable extends Component {
     }
   };
   render() {
-    // debugger;
-    //console.log(this.tasks);
-    console.log(this.props.tasks);
-    //console.log(this.state);
     // TODO: Add edit/delete of plans
     return <div>{this.renderContent()}</div>;
   }

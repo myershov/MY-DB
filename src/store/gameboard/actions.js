@@ -94,7 +94,9 @@ export const getTasksThunk = (select, key, c) => dispatch => {
   if (c == undefined) {
     c = 10;
   }
-
+  if (key == "no more") {
+    c = 1;
+  }
   const tasks = [];
   console.log("count", c);
   database
@@ -109,6 +111,8 @@ export const getTasksThunk = (select, key, c) => dispatch => {
       });
       if ((key !== undefined || key !== "") && c == 11) {
         tasks.shift();
+      } else if (key == "no more") {
+        tasks.length = 0;
       }
     })
     .then(() => dispatch(getTasks(tasks)));
